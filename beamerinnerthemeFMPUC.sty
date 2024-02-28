@@ -78,6 +78,16 @@
   \end{picture}
 }
 
+%Custom frame for table of contents
+\let\beamertableofcontents\tableofcontents
+\renewcommand{\tableofcontents}[1][]{
+\beamertableofcontents[#1]
+\tikz[remember picture,overlay]
+\node at ([xshift=-.25\paperwidth]current page.east) 
+{\includegraphics[height=\paperheight,width=.5\paperwidth]{toc.jpg}};}
+
+
+
 %Custom frames for questions and thanks
 \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground2}{background_2.jpg}
 \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground3}{background_3.jpg}
