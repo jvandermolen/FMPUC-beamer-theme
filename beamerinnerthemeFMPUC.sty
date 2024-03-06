@@ -8,6 +8,7 @@
 % 1. under the LaTeX Project Public License and/or
 % 2. under GPLv3.
 
+\usepackage{ifthen}
 \usepackage{tikz}
 \mode<presentation>
 
@@ -35,7 +36,25 @@
 \setlength\leftmarginiii{.6\beamer@fancy@normalmargin}
 
 
-\pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground}{background.jpg}
+\makeatletter
+\newcommand*{\aspectratio}{\ratio{\strip@pt\beamer@paperwidth}{\strip@pt\beamer@paperheight}}
+\makeatother
+
+\ifthenelse{\lengthtest{\paperwidth < 1.5\paperheight}}
+{
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground}{background_4x3.jpg}
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground2}{background_2_4x3.jpg}
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground3}{background_3_4x3.jpg}
+  \newcommand{\massive}{\fontsize{55}{61}\selectfont}
+  \newcommand{\lindent}{.05\paperwidth}
+}
+{
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground}{background_16x9.jpg}
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground2}{background_2_16x9.jpg}
+  \pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground3}{background_3_16x9.jpg}
+  \newcommand{\massive}{\fontsize{70}{84}\selectfont}
+  \newcommand{\lindent}{.12\paperwidth}
+}
 \pgfdeclareimage[width=.64216\paperwidth]{FMPUClogo}{logo.pdf}
 
 \defbeamertemplate*{title page}{fancy}[1][]
@@ -89,8 +108,6 @@
 
 
 %Custom frames for questions and thanks
-\pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground2}{background_2.jpg}
-\pgfdeclareimage[width=\paperwidth, height=\paperheight]{FMPUCbackground3}{background_3.jpg}
 \newcommand{\questionspage}{%
   \begin{picture}(\paperwidth,\paperheight)
     
@@ -103,7 +120,7 @@
     %}
 
     \put(-1in-\oddsidemargin+.1\paperwidth,.3556\paperheight){%
-    \fontsize{70}{84}\selectfont Questions?
+    \massive Questions?
     }
 
   \end{picture}  
@@ -122,10 +139,10 @@
     %}
 
     \put(-1in-\oddsidemargin+.14\paperwidth,.3814\paperheight){%
-    \fontsize{70}{84}\selectfont Thank you
+    \massive Thank you
     }
 
-    \put(-1in-\oddsidemargin+.12\paperwidth,.075\paperheight){%
+    \put(-1in-\oddsidemargin+\lindent,.075\paperheight){%
       {
         \leavevmode%
         \hbox{
